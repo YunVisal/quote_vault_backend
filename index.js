@@ -1,7 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const {QUOTE_API_URL, QUOTE_API_HOST, QUOTE_API_KEY, PORT} = require('./constant');
 
 const app = express();
+
+app.use(cors({
+    origin: 'https://quote-vault.visalyun.me'
+}));
 
 app.get('/quote', async function(req, res) {
     try {
