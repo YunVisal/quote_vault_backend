@@ -1,12 +1,20 @@
 const express = require('express');
-const cors = require('cors');
 const {QUOTE_API_URL, QUOTE_API_HOST, QUOTE_API_KEY, PORT} = require('./constant');
 
 const app = express();
 
-app.use(cors({
-    origin: 'https://quote-vault.visalyun.me'
-}));
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://quote-vault.visalyun.me');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  
+    // Allow preflight requests (OPTIONS)
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(204);
+    }
+  
+    next();
+  });
 
 app.get('/quote', async function(req, res) {
     try {
